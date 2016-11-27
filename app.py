@@ -17,8 +17,8 @@ app = Flask(__name__)
 def webhook():
     req = request.get_json(silent=True, force=True)
 
-    print("Request:")
-    print(json.dumps(req, indent=4))
+    #print("Request:")
+    #print(json.dumps(req, indent=4))
 
     res = makeWebhookResult(req)
 
@@ -41,12 +41,22 @@ def makeWebhookResult(req):
     if state is None:
         return None
 
-    print(json.dumps(item, indent=4))
+    #print(json.dumps(item, indent=4))
 
     url = "http://ac9baf93.ngrok.io/api/PwZ5n9cSlbRssx0bMipb69lNIj4Sn7m8vTLwS2bR/lights/6/state"
 
     body = {"on": False,"bri": 200}
-
+    
+    print("State:")
+    print(state)
+    
+    print("URL:")
+    print(url)
+    
+    print("BODY:")
+    print(body)
+    
+    
     if state == 'on':
         body = {"on": True,"bri": 200}
     else:
@@ -72,9 +82,8 @@ def makeWebhookResult(req):
 
 
 if __name__ == '__main__':
-    #port = int(os.getenv('PORT', 5000))
+    port = int(os.getenv('PORT', 5000))
 
-    #print('Starting app on port %d' % port)
+    print('Starting app on port %d' % port)
 
-    #app.run(debug=False, port=port, host='0.0.0.0')
-    app.run(debug=True)
+    app.run(debug=True, port=port, host='0.0.0.0')
