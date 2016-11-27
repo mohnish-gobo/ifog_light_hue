@@ -19,25 +19,13 @@ def webhook():
     print("Request:")
     print(json.dumps(req, indent=4))
 
-    res = processRequest(req)
+    res = makeWebhookResult(req)
 
     res = json.dumps(res, indent=4)
     # print(res)
     r = make_response(res)
     r.headers['Content-Type'] = 'application/json'
     return r
-
-
-def processRequest(req):
-
-    baseurl = "http://ac9baf93.ngrok.io/api/PwZ5n9cSlbRssx0bMipb69lNIj4Sn7m8vTLwS2bR/lights/6/"
-    query = makeQuery(req)
-    if query is None:
-        return {}
-    url = baseurl
-
-    res = makeWebhookResult(data)
-    return res
 
 
 def makeWebhookResult(data):
