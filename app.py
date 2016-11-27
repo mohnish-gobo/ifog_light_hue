@@ -29,56 +29,44 @@ def webhook():
 
 
 def processRequest(req):
-    if req.get("result").get("action") != "yahooWeatherForecast":
+
+    baseurl = "http://ac9baf93.ngrok.io/api/PwZ5n9cSlbRssx0bMipb69lNIj4Sn7m8vTLwS2bR/lights/6/"
+    query = makeQuery(req)
+    if query is None:
         return {}
-    baseurl = "https://query.yahooapis.com/v1/public/yql?"
-    yql_query = makeYqlQuery(req)
-    if yql_query is None:
-        return {}
-    yql_url = baseurl + urllib.urlencode({'q': yql_query}) + "&format=json"
-    result = urllib.urlopen(yql_url).read()
-    data = json.loads(result)
+    url = baseurl
+
     res = makeWebhookResult(data)
     return res
 
 
-def makeYqlQuery(req):
+def makeWebhookResult(data):
+
+    if req.get("result").get("action") != "light":
+        return {}
+
     result = req.get("result")
     parameters = result.get("parameters")
-    city = parameters.get("geo-city")
-    if city is None:
+    state = parameters.get("light1")
+
+    if state is None:
         return None
-
-    return "select * from weather.forecast where woeid in (select woeid from geo.places(1) where text='" + city + "')"
-
-
-def makeWebhookResult(data):
-    query = data.get('query')
-    if query is None:
-        return {}
-
-    result = query.get('results')
-    if result is None:
-        return {}
-
-    channel = result.get('channel')
-    if channel is None:
-        return {}
-
-    item = channel.get('item')
-    location = channel.get('location')
-    units = channel.get('units')
-    if (location is None) or (item is None) or (units is None):
-        return {}
-
-    condition = item.get('condition')
-    if condition is None:
-        return {}
 
     # print(json.dumps(item, indent=4))
 
-    speech = "Today in " + location.get('city') + ": " + condition.get('text') + \
-             ", the temperature is " + condition.get('temp') + " " + units.get('temperature')
+    url = "http://ac9baf93.ngrok.io/api/PwZ5n9cSlbRssx0bMipb69lNIj4Sn7m8vTLwS2bR/lights/6/state"
+
+    if state == 'on':
+        body = {"on": True,"bri": 200}
+    else:
+        body = {"on": False, "bri": 0 }
+
+    response = requests.request("PUT", url, data=json.dumps(body))
+
+    if response.status_code == 200:
+        speech = "The light is now switched " + state
+    else:
+        speech = "The light was not switched " + state + " due to an error. Please try again."
 
     print("Response:")
     print(speech)
@@ -88,7 +76,7 @@ def makeWebhookResult(data):
         "displayText": speech,
         # "data": data,
         # "contextOut": [],
-        "source": "apiai-weather-webhook-sample"
+        "source": "ifog-light-control"
     }
 
 
