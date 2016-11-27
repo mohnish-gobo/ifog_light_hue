@@ -21,7 +21,7 @@ def webhook():
     print(json.dumps(req, indent=4))
 
     res = makeWebhookResult(req)
-    
+
     res = json.dumps(res, indent=4)
     print(res)
     r = make_response(res)
@@ -41,12 +41,12 @@ def makeWebhookResult(req):
     if state is None:
         return None
 
-    # print(json.dumps(item, indent=4))
+    print(json.dumps(item, indent=4))
 
     url = "http://ac9baf93.ngrok.io/api/PwZ5n9cSlbRssx0bMipb69lNIj4Sn7m8vTLwS2bR/lights/6/state"
-    
+
     body = {"on": True,"bri": 200}
-    
+
     if state == 'on':
         body = {"on": True,"bri": 200}
     else:
@@ -67,14 +67,13 @@ def makeWebhookResult(req):
         "displayText": speech,
         # "data": data,
         # "contextOut": [],
-        "source": "ifog_light_control"
+        "source": "ifog_light_hue"
     }
 
 
 if __name__ == '__main__':
     port = int(os.getenv('PORT', 5000))
 
-    #print "Starting app on port %d" % port
-    print "Starting app on port 5000"
+    print('Starting app on port %d' % port)
 
     app.run(debug=False, port=port, host='0.0.0.0')
