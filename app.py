@@ -22,13 +22,6 @@ def webhook():
 
     res = makeWebhookResult(req)
     
-    res = {
-        "speech": "Gotcha",
-        "displayText": "Gotcha",
-        # "data": data,
-        # "contextOut": [],
-        #"source": "ifog_light_control"
-    }
     res = json.dumps(res, indent=4)
     print(res)
     r = make_response(res)
