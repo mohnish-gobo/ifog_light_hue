@@ -37,15 +37,18 @@ def makeWebhookResult(req):
     result = req.get("result")
     parameters = result.get("parameters")
     state = parameters.get("light1")
+    brightness = parameters.get("number")
 
     if state is None:
         return None
-
+    
+    if brightness is None:
+        brightness = 200
     #print(json.dumps(item, indent=4))
 
     url = "http://ac9baf93.ngrok.io/api/PwZ5n9cSlbRssx0bMipb69lNIj4Sn7m8vTLwS2bR/lights/6/state"
 
-    body = {"on": False,"bri": 200}
+    body = {"on": False,"bri": brightness}
     
     print("State:")
     print(state)
@@ -58,7 +61,7 @@ def makeWebhookResult(req):
     
     
     if state == 'on':
-        body = {"on": True,"bri": 200}
+        body = {"on": True,"bri": brightness}
     else:
         body = {"on": False, "bri": 0 }
 
