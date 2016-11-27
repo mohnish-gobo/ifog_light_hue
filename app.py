@@ -45,14 +45,14 @@ def makeWebhookResult(req):
 
     url = "http://ac9baf93.ngrok.io/api/PwZ5n9cSlbRssx0bMipb69lNIj4Sn7m8vTLwS2bR/lights/6/state"
 
-    body = {"on": True,"bri": 200}
+    body = {"on": False,"bri": 200}
 
     if state == 'on':
         body = {"on": True,"bri": 200}
     else:
         body = {"on": False, "bri": 0 }
 
-    response = requests.request("PUT", url, data=json.dumps(body))
+    response = requests.put(url, data=json.dumps(body))
 
     if response.status_code == 200:
         speech = "The light is now switched " + state
