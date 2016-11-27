@@ -20,9 +20,16 @@ def webhook():
     print(json.dumps(req, indent=4))
 
     res = makeWebhookResult(req)
-
+    
+    res = {
+        "speech": "Gotcha",
+        "displayText": "Gotcha",
+        # "data": data,
+        # "contextOut": [],
+        #"source": "ifog_light_control"
+    }
     res = json.dumps(res, indent=4)
-    # print(res)
+    print(res)
     r = make_response(res)
     r.headers['Content-Type'] = 'application/json'
     return r
