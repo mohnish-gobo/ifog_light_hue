@@ -28,7 +28,7 @@ def webhook():
     return r
 
 
-def makeWebhookResult(data):
+def makeWebhookResult(req):
 
     if req.get("result").get("action") != "light":
         return {}
@@ -43,7 +43,9 @@ def makeWebhookResult(data):
     # print(json.dumps(item, indent=4))
 
     url = "http://ac9baf93.ngrok.io/api/PwZ5n9cSlbRssx0bMipb69lNIj4Sn7m8vTLwS2bR/lights/6/state"
-
+    
+    body = {"on": True,"bri": 200}
+    
     if state == 'on':
         body = {"on": True,"bri": 200}
     else:
