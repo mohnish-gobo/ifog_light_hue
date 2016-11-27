@@ -1,6 +1,6 @@
 {
   "name": "iFog webhook",
   "description": "iFog webhook",
-  "repository": "https://github.com/mohnish-gobo/ifog_light_control",
+  "repository": "https://github.com/mohnish-gobo/ifog_light_hue",
   "keywords": ["iFog", "natural language"]
 }
