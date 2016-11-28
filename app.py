@@ -74,7 +74,7 @@ def makeWebhookResult(req):
 
     if response.status_code == 200:
         if state == 'on':
-            speech = "The light is now switched " + state + " with brightness of " + brightness
+            speech = "The light is now switched " + state + " with brightness of " + str(brightness)
         if state == 'off':
             speech = "The light is now switched " + state
     else:
