@@ -33,22 +33,22 @@ def makeWebhookResult(req):
 
     if req.get("result").get("action") != "light":
         return {}
-
+    
+    brightness = 250
+    
     result = req.get("result")
     parameters = result.get("parameters")
     state = parameters.get("light1")
     brightness = parameters.get("number")
 
     if state is None:
-        return None
+        state = 'on'
     
-    if brightness is None:
-        brightness = 200
     #print(json.dumps(item, indent=4))
 
     url = "http://ac9baf93.ngrok.io/api/PwZ5n9cSlbRssx0bMipb69lNIj4Sn7m8vTLwS2bR/lights/6/state"
 
-    body = {"on": False,"bri": brightness}
+    body = {"on": True,"bri": brightness}
     
     print("State:")
     print(state)
@@ -68,7 +68,10 @@ def makeWebhookResult(req):
     response = requests.put(url, data=json.dumps(body))
 
     if response.status_code == 200:
-        speech = "The light is now switched " + state
+        if state == 'on':
+            speech = "The light is now switched " + state + " with brightness of " + brightness
+        if state == 'off':
+            speech = "The light is now switched " + state
     else:
         speech = "The light was not switched " + state + " due to an error. Please try again."
 
