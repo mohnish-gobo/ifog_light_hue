@@ -34,8 +34,6 @@ def makeWebhookResult(req):
     if req.get("result").get("action") != "light":
         return {}
     
-    brightness = 250
-    
     result = req.get("result")
     parameters = result.get("parameters")
     state = parameters.get("light1")
@@ -43,6 +41,9 @@ def makeWebhookResult(req):
 
     if state is None:
         state = 'on'
+    
+    if brightness is None:
+        brightness = 250
     
     #print(json.dumps(item, indent=4))
 
