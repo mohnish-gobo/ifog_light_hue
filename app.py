@@ -31,8 +31,8 @@ def webhook():
 
 def makeWebhookResult(req):
 
-    if req.get("result").get("action") != "light":
-        return {}
+    #if req.get("result").get("action") != "light":
+        #return {}
     
     result = req.get("result")
     parameters = result.get("parameters")
