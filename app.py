@@ -44,7 +44,7 @@ def makeWebhookResult(req):
     
     if brightness == "":
         brightness = 250
-    else if int(brightness) > 250:
+    elif int(brightness) > 250:
         brightness = 250
     else:
         brightness = int(brightness)
