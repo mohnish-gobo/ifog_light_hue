@@ -39,11 +39,15 @@ def makeWebhookResult(req):
     state = parameters.get("light1")
     brightness = parameters.get("number")
 
-    if state is None:
+    if state == "":
         state = 'on'
     
-    if brightness is None:
+    if brightness == "":
         brightness = 250
+    else if int(brightness) > 250:
+        brightness = 250
+    else:
+        brightness = int(brightness)
     
     #print(json.dumps(item, indent=4))
 
